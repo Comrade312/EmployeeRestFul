@@ -34,7 +34,8 @@ public class EmployeeService {
             employee.setDepartment(departmentFromDb);
             employeeDao.save(employee);
         } else {
-            throw new BadRequestParametersException("Error in data: path variable id must be not null and equal to employee id");
+            throw new BadRequestParametersException("Error in data: " +
+                    "path variable id must be not null and equal to employee id");
         }
 
     }

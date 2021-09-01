@@ -26,7 +26,8 @@ public class DepartmentService {
             }
             departmentDao.save(department);
         } else {
-            throw new BadRequestParametersException("Error in data: path variable id must be not null and equal to department id");
+            throw new BadRequestParametersException("Error in data: " +
+                    "path variable id must be not null and equal to department id");
         }
     }
 
