@@ -26,9 +26,13 @@
     </nav>
 </div>
 
+<div>
+
+
+</div>
 <div class="container">
+    <h2>Department</h2>
     <div th:if="${department.isPresent()}" class="container">
-        <h2>Department</h2>
         <form id="departmentEditForm">
             <div>
                 <input id="departmentId" type="number" th:value="${department.get().id}" hidden>
@@ -45,38 +49,45 @@
                 </div>
             </div>
         </form>
+
+        <div class="col-sm-7" id="postResultDiv">
+        </div>
+
+        <div class="container">
+            <h3>Department employees</h3>
+            <table id="employeeTable" th:if="${!department.get().employees.isEmpty()}" class="table table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Birth date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="employee : ${department.get().employees}">
+                    <td th:utext="${employee.id}"></td>
+                    <td th:utext="${employee.firstName}"></td>
+                    <td th:utext="${employee.lastName}"></td>
+                    <td th:utext="${employee.gender}"></td>
+                    <td th:utext="${#dates.format(employee.birthDate, 'dd-MM-yyyy')}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${department.get().employees.isEmpty()}" class="container">
+                <h3>No employees</h3>
+            </div>
+        </div>
     </div>
 
-    <div class="col-sm-7" id="postResultDiv">
+    <div th:if="${!department.isPresent()}" class="container">
+        <h3>Not found</h3>
     </div>
 </div>
 
-<div th:if="${!department.get().employees.isEmpty()}" class="container">
-    <h3>Department employees</h3>
-    <table id="employeeTable" class="table table-hover">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Surname</th>
-            <th scope="col">Departments</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Birth date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="employee : ${department.get().employees}">
-            <td th:utext="${employee.id}"></td>
-            <td th:utext="${employee.firstName}"></td>
-            <td th:utext="${employee.lastName}"></td>
-            <td th:if="${employee.department != null}" th:utext="${employee.department.getName()}"></td>
-            <td th:if="${employee.department == null}" th:utext="Отсутствует"></td>
-            <td th:utext="${employee.gender}"></td>
-            <td th:utext="${#dates.format(employee.birthDate, 'dd-MM-yyyy')}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+
 
 
 <script src="/js/department.js"></script>

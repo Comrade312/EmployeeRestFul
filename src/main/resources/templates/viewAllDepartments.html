@@ -27,9 +27,9 @@
     </nav>
 </div>
 
-<div th:if="${!departments.isEmpty()}" class="container">
+<div class="container">
     <h1>Departments</h1>
-    <table id="departmentTable" class="table table-hover">
+    <table id="departmentTable" th:if="${!departments.isEmpty()}" class="table table-hover">
         <thead class="thead-light">
         <tr>
             <th scope="col">ID</th>
@@ -46,7 +46,8 @@
         </tbody>
     </table>
 
-    <div id="postResultDiv">
+    <div th:if="${departments.isEmpty()}" class="container">
+        <h3>No data</h3>
     </div>
 </div>
 

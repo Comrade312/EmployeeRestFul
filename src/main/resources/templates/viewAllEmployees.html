@@ -26,9 +26,9 @@
     </nav>
 </div>
 
-<div th:if="${!employees.isEmpty()}" class="container">
+<div class="container">
     <h1>Employees</h1>
-    <table id="employeeTable" class="table table-hover">
+    <table id="employeeTable" th:if="${!employees.isEmpty()}"  class="table table-hover">
         <thead class="thead-light">
         <tr>
             <th scope="col">ID</th>
@@ -52,7 +52,8 @@
         </tbody>
     </table>
 
-    <div class="col-sm-7" id="postResultDiv">
+    <div th:if="${employees.isEmpty()}" class="container">
+        <h3>No data</h3>
     </div>
 </div>
 

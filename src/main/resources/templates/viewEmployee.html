@@ -27,9 +27,9 @@
 </div>
 
 <div class="container">
+    <h2>Employee</h2>
     <div th:if="${employee.isPresent()}">
         <form id="employeeEditForm">
-            <h2>Employee</h2>
             <div>
                 <input hidden type="number" id="employeeId" th:value="${employee.get().id}">
 
@@ -88,10 +88,15 @@
 
             </div>
         </form>
+
+        <div class="col-sm-7" id="postResultDiv">
+        </div>
     </div>
 
-    <div class="col-sm-7" id="postResultDiv">
+    <div th:if="${!employee.isPresent()}" class="container">
+        <h3>Not found</h3>
     </div>
+
 </div>
 
 <script src="/js/employee.js"></script>

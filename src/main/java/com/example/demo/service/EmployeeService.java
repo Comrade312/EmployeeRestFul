@@ -29,9 +29,13 @@ public class EmployeeService {
             if (!employeeDao.findById(employee.getId()).isPresent()) {
                 throw new EmployeeNotFoundException(employee.getId());
             }
-            Department departmentFromDb =
-                    departmentService.getDepartmentById(employee.getDepartment().getId()).orElse(null);
-            employee.setDepartment(departmentFromDb);
+
+            if (employee.getDepartment() != null) {
+                employee.setDepartment(
+                        departmentService.getDepartmentById(employee.getDepartment().getId()).orElse(null)
+                );
+            }
+       
             employeeDao.save(employee);
         } else {
             throw new BadRequestParametersException("Error in data: " +
