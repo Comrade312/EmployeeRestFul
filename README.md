@@ -1,4 +1,4 @@
-# Employees RestFul
+# Employee RestFul
 
 ## Before start
 For further reference, please consider the following sections:
