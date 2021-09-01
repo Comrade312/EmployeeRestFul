@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import static com.example.demo.constants.Constants.EMPLOYEES_LIST_SIZE;
+import static com.example.demo.constants.Constants.DEPARTMENT_LIST_SIZE;
+
 @Controller
 public class ViewController {
     @Autowired
@@ -18,8 +21,8 @@ public class ViewController {
 
     @GetMapping("/")
     public String main(Model model) {
-        model.addAttribute("employees", employeeService.getAllEmployeesLimitedList(25));
-        model.addAttribute("departments", departmentService.getAllDepartmentsLimitedList(10));
+        model.addAttribute("employees", employeeService.getAllEmployeesLimitedList(EMPLOYEES_LIST_SIZE));
+        model.addAttribute("departments", departmentService.getAllDepartmentsLimitedList(DEPARTMENT_LIST_SIZE));
         return "main";
     }
 

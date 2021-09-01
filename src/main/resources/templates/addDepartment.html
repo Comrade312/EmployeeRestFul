@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create department</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Employee RESTful</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Main page</a></li>
+                <li><a href="/employee/add">Create employee</a></li>
+                <li><a href="/employee/view/all">All employees</a></li>
+                <li class="active"><a href="/department/add">Create department</a></li>
+                <li><a href="/department/view/all">All departments</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <form id="departmentAddForm">
+        <h1>Department form</h1>
+        <div>
+            <div class="form-group">
+                <label for="name">Department name</label>
+                <input id="name" type="text" class="form-control" placeholder="Enter department name" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
+
+    <div id="postResultDiv">
+    </div>
+</div>
+
+<script src="/js/department.js"></script>
+
+</body>
+</html>

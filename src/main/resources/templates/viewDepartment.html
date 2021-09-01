@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Department</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Employee RESTful</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Main page</a></li>
+                <li><a href="/employee/add">Create employee</a></li>
+                <li><a href="/employee/view/all">All employees</a></li>
+                <li><a href="/department/add">Create department</a></li>
+                <li><a href="/department/view/all">All departments</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <div th:if="${department.isPresent()}" class="container">
+        <h2>Department</h2>
+        <form id="departmentEditForm">
+            <div>
+                <input id="departmentId" type="number" th:value="${department.get().id}" hidden>
+
+                <div class="form-group">
+                    <label for="name">Department name</label>
+                    <input id="name" type="text" class="form-control" th:value="${department.get().name}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <button id="enableDisable" type="button" class="btn btn-primary"> Enable/Disable edit</button>
+                    <button id="saveButton" type="submit" class="btn btn-primary" disabled>Save</button>
+                    <button id="deleteButton" type="button" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-sm-7" id="postResultDiv">
+    </div>
+</div>
+
+<div th:if="${!department.get().employees.isEmpty()}" class="container">
+    <h3>Department employees</h3>
+    <table id="employeeTable" class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Departments</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Birth date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${department.get().employees}">
+            <td th:utext="${employee.id}"></td>
+            <td th:utext="${employee.firstName}"></td>
+            <td th:utext="${employee.lastName}"></td>
+            <td th:if="${employee.department != null}" th:utext="${employee.department.getName()}"></td>
+            <td th:if="${employee.department == null}" th:utext="Отсутствует"></td>
+            <td th:utext="${employee.gender}"></td>
+            <td th:utext="${#dates.format(employee.birthDate, 'dd-MM-yyyy')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script src="/js/department.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>
