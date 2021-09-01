@@ -61,12 +61,14 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
+            <th scope="col">Number of employees</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="department : ${departments}">
             <td th:utext="${department.id}"></td>
             <td th:utext="${department.name}"></td>
+            <td th:utext="${department.employees.size()}"></td>
         </tr>
         </tbody>
     </table>
