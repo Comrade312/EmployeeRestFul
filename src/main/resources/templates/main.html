@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Employee RESTful</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Main page</a></li>
+                <li><a href="/employee/add">Create employee</a></li>
+                <li><a href="/employee/view/all">All employees</a></li>
+                <li><a href="/department/add">Create department</a></li>
+                <li><a href="/department/view/all">All departments</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <h1>Employees</h1>
+    <table id="employeeTable" class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Department</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Birth date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td th:utext="${employee.id}"></td>
+            <td th:utext="${employee.firstName}"></td>
+            <td th:utext="${employee.lastName}"></td>
+            <td th:if="${employee.department != null}" th:utext="${employee.department.getName()}"></td>
+            <td th:if="${employee.department == null}" th:text="'Not specified'"></td>
+            <td th:utext="${employee.gender}"></td>
+            <td th:utext="${#dates.format(employee.birthDate, 'dd-MM-yyyy')}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div class="container">
+    <h1>Departments</h1>
+    <table id="departmentTable" class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="department : ${departments}">
+            <td th:utext="${department.id}"></td>
+            <td th:utext="${department.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

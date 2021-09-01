@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.EmployeeDao;
+import com.example.demo.dto.Department;
 import com.example.demo.dto.Employee;
+import com.example.demo.exceptions.employee.EmployeeNotFoundException;
+import com.example.demo.exceptions.request.BadRequestParametersException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,34 +17,45 @@ public class EmployeeService {
     @Autowired
     private EmployeeDao employeeDao;
 
+    @Autowired
+    private DepartmentService departmentService;
+
     public void createEmployee(Employee employee) {
         employeeDao.save(employee);
     }
 
-    public void updateEmployee(Long employeeId, Employee employee) {
-        if (employee != null && employeeId.equals(employee.getEmployeeId())) {
-            if (!employeeDao.findById(employee.getEmployeeId()).isPresent()) {
-                //throw new EmployeeNotFound(employee.getEmployeeId());
+    public void updateEmployee(Long id, Employee employee) {
+        if (employee != null && id.equals(employee.getId())) {
+            if (!employeeDao.findById(employee.getId()).isPresent()) {
+                throw new EmployeeNotFoundException(employee.getId());
             }
+            Department departmentFromDb =
+                    departmentService.getDepartmentById(employee.getDepartment().getId()).orElse(null);
+            employee.setDepartment(departmentFromDb);
+            employeeDao.save(employee);
         } else {
-            //throw new BadRequestParametersException("Error in data: path variable id must be not null and equal city id");
+            throw new BadRequestParametersException("Error in data: path variable id must be not null and equal to employee id");
         }
-        employeeDao.save(employee);
+
     }
 
-    public void deleteEmployeeById(Long employeeId) {
-        if (!employeeDao.findById(employeeId).isPresent()) {
-            //throw new EmployeeNotFound(employeeId);
+    public void deleteEmployeeById(Long id) {
+        if (!employeeDao.findById(id).isPresent()) {
+            throw new EmployeeNotFoundException(id);
         }
-        employeeDao.deleteById(employeeId);
+        employeeDao.deleteById(id);
     }
 
     public List<Employee> getAllEmployees() {
         return employeeDao.findAll();
     }
 
+    public List<Employee> getAllEmployeesLimitedList(Integer size) {
+        List<Employee> employees = employeeDao.findAll();
+        return employees.subList(0, Math.min(employees.size(), size));
+    }
+
     public Optional<Employee> getEmployeeById(Long id) {
         return employeeDao.findById(id);
     }
-
 }
