@@ -61,6 +61,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Surname</th>
+                    <th scope="col">Job title</th>
                     <th scope="col">Gender</th>
                     <th scope="col">Birth date</th>
                 </tr>
@@ -70,6 +71,7 @@
                     <td th:utext="${employee.id}"></td>
                     <td th:utext="${employee.firstName}"></td>
                     <td th:utext="${employee.lastName}"></td>
+                    <td th:utext="${employee.jobTitle}"></td>
                     <td th:utext="${employee.gender}"></td>
                     <td th:utext="${#dates.format(employee.birthDate, 'dd-MM-yyyy')}"></td>
                 </tr>
