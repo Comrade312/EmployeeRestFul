@@ -1,8 +1,10 @@
 package com.example.demo.dto;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,7 +20,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "departments")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = "employees")
 @NoArgsConstructor
 public class Department {
     @Id
@@ -29,6 +33,7 @@ public class Department {
     @Column(name = "name")
     private String name;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "department")
     List<Employee> employees = new ArrayList<>();
 }

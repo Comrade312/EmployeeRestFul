@@ -1,7 +1,10 @@
 package com.example.demo.dto;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,7 +22,9 @@ import java.util.Calendar;
 
 @Entity
 @Table(name = "employees")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = "department")
 @NoArgsConstructor
 public class Employee {
     @Id
@@ -33,6 +38,7 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "department_id")
     private Department department;
